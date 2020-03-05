@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html ng-app="StructuredComponents">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8">
+
+    <link rel="shortcut icon" href="/Images/Icons/favicon.ico" type="image/x-icon"/>
+    <!--Html.IncludeBundle("CookieConsent")-->
+
+    @Html.IncludeBundles("LayoutSilverwingBuyer")
+
+    <!-- Include the page-specifc script file -->
+    <script src="/System/File/PageCode/PageCode.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body ng-controller="BuyerController as BuyerCtrl" ng-cloak>
+<div class="preloader" ng-if="!initialised">
+    <div class="header flex flex-justify-content-space-between flex-align-items-center">
+        <div class="flex flex-align-items-center">
+            <div class="">
+                <!-- <site-menu> should go here -->
+                <span class="hamburger-menu-icon cursor-pointer"></span>
+            </div>
+
+            <div class="" style="margin-left:40px">
+                <a href="/Buyer/Home/Index">
+                    <!-- Supplier logo -->
+                    <span class="sw-logo"></span>
+                </a>
+            </div>
+        </div>
+
+        <div class="text-center" style="flex:1">
+            <input type="text" class="custom-input search-input" placeholder="Search">
+        </div>
+
+        <div class="">
+            <!-- Wallet -->
+
+            <!-- Basket-->
+            <a href="/Buyer/Home/Basket" class="block" style="width:32.53px; color:#9B1A47;">
+                Basket
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<div class="content-wrapper" ng-if="initialised">
+    <div class="header flex flex-justify-content-space-between flex-align-items-center">
+        <div class="flex flex-align-items-center">
+            <div class="">
+                <!-- <site-menu> should go here -->
+                <span class="hamburger-menu-icon cursor-pointer" ng-click="toggleSiteMenu()"></span>
+            </div>
+
+            <div class="" style="margin-left:40px">
+                <a href="/Buyer/Home/Index">
+                    <!-- Supplier logo -->
+                    <span class="sw-logo"></span>
+                </a>
+            </div>
+        </div>
+
+        <div class="text-center" style="flex:1">
+            <div class="relative inline">
+                <input ng-model="$root.searchText" type="text" class="custom-input search-input" placeholder="Search" ng-keydown="$event.keyCode === 13 && search()">
+                <button class="search-button inline transparent no-border no-box-shadow" ng-click="search()"></button>
+            </div>
+        </div>
+
+        <!--<login-menu on-mode-change="setMode" mode="mode" is-hidden="true"></login-menu>-->
+        <login-menu on-mode-change="setMode" mode="mode" is-hidden="false"></login-menu>
+
+        <div class="">
+            <!-- Wallet -->
+
+            <!-- Basket-->
+            <a href="/Buyer/Home/Basket" class="block">
+                <data object="$root.currentOrder" root-fixed-display="true" expanded="true" use-custom-viewers="true" viewer-name="BasketIcon" empty-viewer-name="BasketIcon" mode="Display"></data>
+            </a>
+        </div>
+
+        <!--Todo: move the mobile logic to the logo/menu directives and remove this div from here -->
+        <div class="mobile">
+            <div class="mobile_menu_bar">
+                <site-logo logo-class="mobile_logo_container" banner-class="mobile_logo_text" mode="mode" banner="Structured Software"></site-logo>
+                <button class="fa fa-bars" id="mobile_menu"></button>
+            </div>
+            <site-menu menu-class="mobile_menu_container" mode="mode"></site-menu>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <body-content mode="mode" content-stylesheets="['/Repository/System/SystemContent/Formats/main.css','/Repository/Buyer/SystemContent/Formats/silver-theme.css']" class="body-content">
+            <div class="page-wrapper">
+                <div class="site-navigation">
+                    <div class="navigation-container">
+                        <site-menu menu-class="main_menu_container" mode="mode" display-as="IconsOnly" animation-effect="SlideDown"></site-menu>
+                    </div>
+                    <div class="main-menu-toggle">
+                        <div class="button button-lg background-almost-white with-border-top hidden">
+                            <span class="fa fa-times-circle"></span>
+                            <span class="text-grey">Sign out</span>
+                        </div>
+                        <div class="main-menu-toggle-elipsis" ng-click="toggleSignOut()">...</div>
+                    </div>
+                </div>
+
+                <div class="contents">
+                    @RenderBody()
+                    <!--Footer moved into content section, so that it can appear at the bottom of the page, without influencing the side nav menu-->
+                    <div class="text-center text-lavender background-white margin-footer">
+                        <p class="margin-right-20 inline">&copy; 2018 - 2020 Casqol Limited</p>
+                        <span class="divider-vertical">|</span>
+                        <a href="/Buyer/Home/Terms/Terms.cshtml" class="text-lavender">Terms</a>
+                        <span class="divider-vertical">|</span>
+                        <a href="#" class="text-lavender">Privacy</a>
+                        <span class="divider-vertical">|</span>
+                        <a href="#" class="text-lavender">Help</a>
+                        <span class="divider-vertical">|</span>
+                        <a href="#" class="text-lavender">Contact</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--     <div class="bottom-panel mobile">-->
+            <!--        <login-menu on-mode-change="setMode" mode="mode"></login-menu>                -->
+            <!--     </div> -->
+
+        </body-content>
+    </div>
+</div>
+
+<!-- NOT to be moved for now! -->
+<script src="/Scripts/jquery-2.1.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        jQuery.noConflict(); /// Code that uses jQuery's $ for other purposes can follow (needed for colorbox to work)
+    });
+</script>
+</body>
+</html>
